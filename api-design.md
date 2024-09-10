@@ -13,25 +13,28 @@
    - response : employee details as JSON
 
    ```json
-   {
-       "id" : 1,
-       "name"  : "Clark Kent",
-       "designation" : "Manager",
-       "accountName" : "smart ops",
-       "managerId" : ""
-   }
+    {
+        "id": 1,
+        "name": "Clark Kent",
+        "designation": "Manager",
+        "accountName": "smart ops",
+        "managerId": 0
+    }
    ```
 
 2. **GET /api/v1/streams**
 
-   - request-param-required : false
    - response-status : 200
    - response : streams details as JSON
 
    ```json
-   {
-       "streams" : ["stream1","stream2","stream3"]
-   }
+    {
+        "streams": [
+            "stream1",
+            "stream2",
+            "stream3"
+        ]
+    }
    ```
 
 3. **PUT /api/v1/employees?employee-id={employee_id}&manager-id={manager_id}&account-name={account_name}&designation={designation_name}**
@@ -44,9 +47,9 @@
    - response :
 
    ```json
-   {
-       "message" : "Clark Kent's Manager has been changed from Diana to Bruce Wayne"
-   }
+    {
+        "message": "Clark Kent's Manager has been changed from Diana to Bruce Wayne"
+    }
    ```
 
 # Inventory Management System
@@ -78,9 +81,9 @@
    - response-body:
 
    ```json
-   {
-       "message":"Product is successfully created"
-   }
+    {
+        "message": "Product is successfully created"
+    }
    ```
 
    <!-- Create Category -->
@@ -113,102 +116,114 @@
    - response-body:
 
    ```json
-   {
-       "products" : [
-       {
-        "productId":"123",
-        "productName":"Name",
-        "categoryId":"789",
-        "price":500,
-        "quantity":10
-       }
-    ]
-   }
+    {
+        "products": [
+            {
+                "productId": "123",
+                "productName": "Name",
+                "categoryId": "789",
+                "price": 500,
+                "quantity": 10
+            }
+        ]
+    }
    ```
 
    <!-- List products by Category -->
 
 4. **GET /api/v1/product?id={product_id}&category-id={category_id}**
 
-   - request-param : category
+   - request-param : product_id (required : false)
+   - request-param : category_id (required : false)
    - response-status:200
    - response-body:
 
    ```json
-   {
-       "products" : [
-       {
-        "productId":"123",
-        "productName":"Name",
-        "categoryId":"789",
-        "price":500,
-        "quantity":10
-       }
-    ]
-   }
+    {
+        "products": [
+            {
+                "productId": "123",
+                "productName": "Name",
+                "categoryId": "789",
+                "price": 500,
+                "quantity": 10
+            }
+        ]
+    }
    ```
 
 5. **GET /api/v1/category?id={category_id}**
+   
    - request-param : id (required : true)
    - response-status:200
    - response-body:
    ```json
-   [
-       {
-       "categoryId":"123",
-       "categoryName":"Name",
-       }
-   ]
+    {
+        "categoryId": "123",
+        "categoryName": "Name"
+    }
    ```
 
 6. **PUT /api/v1/product?product-id={product_id}&name={product_name}&category={category_id}&price={product_price}&quantity={product_quantity}**:
+   
+   - request-param : product-id (required : true)
+   - request-param : name (required : false)
+   - request-param : category (required : false)
+   - request-param : price (required : false)
+   - request-param : quantity (required : false)
    - response-status:200
    - response-body:
-   ```json
-   {
-       "message":"Successfully updated product"
-   }
-   ```
-7. **PUT /api/v1/category?category-id={category_id}&category-name={category_name}**
-   - response-status:200
-   - response-body:
-   ```json
-   {
-       "message":"Successfully updated category"
-   }
-   ```
-8. **DELETE /api/v1/product?product-id={product_id}**
-   - request-param:productId
-   - request-param-required:true
-     -response-status:200
-   - response-body:
-   ```json
-   {
-       "message":"successfully deleted product"
-   }
-   ```
-9. **DELETE /api/v1/category?category-id={category_id}**
 
-    - request-param:categoryId
-    - request-param-required:true
+   ```json
+    {
+        "message": "Successfully updated product"
+    }
+   ```
+
+7. **PUT /api/v1/category?category-id={category_id}&category-name={category_name}**
+   
+   - request-param : category-id (required : true)
+   - request-param : category-name (required : true)
+   - response-status:200
+   - response-body:
+   
+   ```json
+    {
+        "message": "Successfully updated category"
+    }
+   ```
+
+8. **DELETE /api/v1/product?product-id={product_id}**
+   
+   - request-param : product-id (required : true)
+   - response-status:200
+   - response-body:
+   ```json
+    {
+        "message": "Successfully deleted product"
+    }
+   ```
+9.  **DELETE /api/v1/category?category-id={category_id}**
+
+    - request-param : category-id (required : true)
     - response-status:200
     - response-body:
 
     ```json
     {
-        "message": "successfully deleted category"
+        "message": "Successfully deleted category"
     }
     ```
 
 10. **PUT /api/v1/order?product-id={product_id}&quantity={qty}**
 
-    - request-param:productId
-    - request-param:quantity
+    - request-param : product-id (required : true)
+    - request-param : quantity (required : true)
     - response-status:200
     - response-body:
 
     ```json
     {
-        "message": "successfully sold"
+        "message": "successfully ordered"
     }
     ```
