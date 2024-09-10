@@ -130,7 +130,6 @@
 
 4. **GET /api/v1/product?id={product_id}&category-id={category_id}**
 
-   - request-body-required : true
    - request-param : category
    - response-status:200
    - response-body:
@@ -150,8 +149,7 @@
    ```
 
 5. **GET /api/v1/category?id={category_id}**
-   - request-body-required : true
-   - request-param : categoryId
+   - request-param : id (required : true)
    - response-status:200
    - response-body:
    ```json
@@ -162,6 +160,7 @@
        }
    ]
    ```
+
 6. **PUT /api/v1/product?product-id={product_id}&name={product_name}&category={category_id}&price={product_price}&quantity={product_quantity}**:
    - response-status:200
    - response-body:
