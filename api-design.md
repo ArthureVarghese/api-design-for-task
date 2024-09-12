@@ -8,6 +8,8 @@
 
 1. **GET /api/v1/employees?starts-with={letter}**
 
+    |Parameter|Details|
+    |---------|-------|
    - request-param : starts-with (required : true)
    - response-status : 200
    - response : employee details as JSON
