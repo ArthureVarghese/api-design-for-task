@@ -8,9 +8,9 @@
 
 1. **GET /api/v1/employees?starts-with={letter}**
 
-    |Parameter|Details|
-    |---------|-------|
-   - request-param : starts-with (required : true)
+    | Query Parameter | Details                                                                                             |
+    | --------------- | --------------------------------------------------------------------------------------------------- |
+    | starts-with     | required\<character><br>This parameter is used to get the employee details where name starts with letter |
    - response-status : 200
    - response : employee details as JSON
 
@@ -41,10 +41,13 @@
 
 3. **PUT /api/v1/employees?employee-id={employee_id}&manager-id={manager_id}&account-name={account_name}&designation={designation_name}**
 
-   - request-param : employee-id (required : true)
-   - request-param : manager-id (required : false)
-   - request-param : account-name (required : false)
-   - request-param : designation (required : false)
+| Query Parameter | Details                                                                                                                  |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| employee-id     | required\<integer><br>This parameter is used to update he manager-id, account-name and designation of the given employee_id |
+| manager-id      | optional\<integer><br>This parameter is used to update he manager-id of the given employee_id                               |
+| account-name    | optional\<integer><br>This parameter is used to update he account_name of the given employee_id                          |
+| designation     | optional\<integer><br>This parameter is used to update he designation_name of the given employee_id                      |
+
    - response-status : 200
    - response :
 
@@ -135,8 +138,10 @@
 
 4. **GET /api/v1/product?id={product_id}&category-id={category_id}**
 
-   - request-param : product_id (required : false)
-   - request-param : category_id (required : false)
+    | Query Parameter | Details                                                                                              |
+    | --------------- | ---------------------------------------------------------------------------------------------------- |
+    | product-id      | optional\<integer><br>This parameter is used to get the details of the product with the given product_id  |
+    | category-id     | optional\<integer><br>This parameter is used to get the details of the product with the given category_id |
    - response-status:200
    - response-body:
 
@@ -156,7 +161,11 @@
 
 5. **GET /api/v1/category?category-id={category_id}**
    
-   - request-param : id (required : true)
+    | Query Parameter | Details                                                                                          |
+    | --------------- | ------------------------------------------------------------------------------------------------ |
+    | category-id     | required\<integer><br>This parameter is used to get the 
+
+category details with the given category-id |
    - response-status:200
    - response-body:
    ```json
