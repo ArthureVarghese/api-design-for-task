@@ -2,7 +2,7 @@
 
 ## Entitity
 
-<img src="employee_database_diagram.png" alt="employee-entity-diagram" style="width:400px;"/>
+<img src="employee_database_diagram.png" alt="employee-entity-diagram" style="width:900px;"/>
 
 ## API Methods
 
@@ -152,7 +152,7 @@
     }
    ```
 
-5. **GET /api/v1/category?id={category_id}**
+5. **GET /api/v1/category?category-id={category_id}**
    
    - request-param : id (required : true)
    - response-status:200
@@ -164,13 +164,18 @@
     }
    ```
 
-6. **PUT /api/v1/product?product-id={product_id}&name={product_name}&category={category_id}&price={product_price}&quantity={product_quantity}**:
+6. **PUT /api/v1/product?product-id={product_id}&name={product_name}&category={category_id}&price={product_price}&quantity={product_quantity}**
    
-   - request-param : product-id (required : true)
-   - request-param : name (required : false)
-   - request-param : category (required : false)
-   - request-param : price (required : false)
-   - request-param : quantity (required : false)
+    *To update details of a product*
+    
+    | Query Parameter | Detail                                                                                       |
+    | --------------- | -------------------------------------------------------------------------------------------- |
+    | product-id      | required\<integer> The id of the product to be updated                                       |
+    | product-name    | optional\<string> The new name to replace the existing product name                          |
+    | category-id     | optional\<integer> The ID of the category to replace the existing category ID of the product |
+    | price           | optional\<double> The new price to replace the existing price of the product                 |
+    | quantity        | optional\<integer> The new quantity to replace the existing quantity of the product          |
+  
    - response-status:200
    - response-body:
 
@@ -180,10 +185,15 @@
     }
    ```
 
-7. **PUT /api/v1/category?category-id={category_id}&category-name={category_name}**
-   
-   - request-param : category-id (required : true)
-   - request-param : category-name (required : true)
+7. **PUT /api/v1/category?category-id={category_id}&name={category_name}**
+
+    *To update the name of a category*
+
+    | Query Parameters | Details                                                  |
+    | ---------------- | -------------------------------------------------------- |
+    | category-id      | required\<integer> The id of the category to be updated  |
+    | name             | required\<string> The name of the category to be updated |
+
    - response-status:200
    - response-body:
    
@@ -194,8 +204,13 @@
    ```
 
 8. **DELETE /api/v1/product?product-id={product_id}**
-   
-   - request-param : product-id (required : true)
+
+    *To delete a product using its id*
+
+    | Query Parameter | Details                                                |
+    | --------------- | ------------------------------------------------------ |
+    | product-id      | required\<integer> The id of the product to be deleted |
+
    - response-status:200
    - response-body:
    ```json
@@ -204,8 +219,13 @@
     }
    ```
 9.  **DELETE /api/v1/category?category-id={category_id}**
+    
+    *To delete a category using its id*
 
-    - request-param : category-id (required : true)
+    | Query Parameter | Details                                                 |
+    | --------------- | ------------------------------------------------------- |
+    | category-id     | required\<integer> The id of the category to be deleted |
+
     - response-status:200
     - response-body:
 
@@ -217,10 +237,14 @@
 
 10. **PUT /api/v1/order?product-id={product_id}&quantity={qty}**
 
-    - request-param : product-id (required : true)
-    - request-param : quantity (required : true)
-    - response-status:200
-    - response-body:
+    *To create an Order to buy items*
+
+    | Query Parameter | Details                                                          |
+    | --------------- | ---------------------------------------------------------------- |
+    | product-id      | required\<integer>  The id of product for which the order is for |
+    | quantity        | required\<integer>  The quantity of the product in the order     |
+
+    - response-status: 200
 
     ```json
     {
