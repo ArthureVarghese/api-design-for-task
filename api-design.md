@@ -6,25 +6,38 @@
 
 ## API Methods
 
-1. **GET /api/v1/employees?starts-with={letter}**
+1. **GET /api/v1/employees?starts-with={letter}&page={page_number}**
 
-    | Query Parameter | Details                                                                                                  |
-    | --------------- | -------------------------------------------------------------------------------------------------------- |
-    | starts-with     | required\<character><br>This parameter is used to get the employee details where name starts with letter |
+    *To get details of employees*
+
+    | Query Parameter | Details                                                                                                                      |
+    | --------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+    | starts-with     | optional\<character> This parameter is used to get the employee details where name starts with letter                        |
+    | page            | optional\<integer> This parameter is used for page wise result as only 25 products are displayed at once (Default value : 1) |
+
+    NOTE : If  ```starts-with``` is not specified, details of all employees are returned
+
    - response-status : 200
-   - response : employee details as JSON
+   - response-body : 
 
    ```json
     {
-        "id": 1,
-        "name": "Clark Kent",
-        "designation": "Manager",
-        "accountName": "smart ops",
-        "managerId": 0
+        "employees": [
+            {
+                "id": 1,
+                "name": "Clark Kent",
+                "streamId": "IND-ASP-ML-SALES",
+                "accountId": "IND-ASP-ML",
+                "managerId": 0,
+                "designation": "Manager"
+            }
+        ]
     }
    ```
 
 2. **GET /api/v1/streams**
+    
+    *To get details of all streams*
 
    - response-status : 200
    - response : streams details as JSON
@@ -32,24 +45,37 @@
    ```json
     {
         "streams": [
-            "stream1",
-            "stream2",
-            "stream3"
+            {
+                "id" : "IND-ASP-ML-SALES",
+                "name" : "Aspire Machine Learning - Sales"
+            },
+            {
+                "id" : "IND-ASP-ML-DELIVERY",
+                "name" : "Aspire Machine Learning - Delivery"
+            },
+            {
+                "id" : "IND-ASP-ML-QA",
+                "name" : "Aspire Machine Learning - Quality Assurance"
+            }
         ]
     }
    ```
 
 3. **PUT /api/v1/employees?employee-id={employee_id}&manager-id={manager_id}&account-name={account_name}&designation={designation_name}**
+   
+   *To update details of employee*
 
-| Query Parameter | Details                                                                                                                     |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| employee-id     | required\<integer><br>This parameter is used to update he manager-id, account-name and designation of the given employee_id |
-| manager-id      | optional\<integer><br>This parameter is used to update he manager-id of the given employee_id                               |
-| account-name    | optional\<integer><br>This parameter is used to update he account_name of the given employee_id                             |
-| designation     | optional\<integer><br>This parameter is used to update he designation_name of the given employee_id                         |
+    | Query Parameter | Details                                                                                                                  |
+    | --------------- | ------------------------------------------------------------------------------------------------------------------------ |
+    | employee-id     | required\<integer> This parameter is used to update he manager-id, account-name and designation of the given employee_id |
+    | manager-id      | optional\<integer> This parameter is used to update he manager-id of the given employee_id                               |
+    | account-name    | optional\<integer> This parameter is used to update he account_name of the given employee_id                             |
+    | designation     | optional\<integer> This parameter is used to update he designation_name of the given employee_id                         |
+
+    NOTE : Alteast 1 of the optional parameters should be specified
 
    - response-status : 200
-   - response :
+   - response-body :
 
    ```json
     {
@@ -69,25 +95,26 @@
 
 1. **POST /api/v1/product**
 
+    *To insert a new product*
+
    - request-body:
 
    ```json
     {
-        "productId": "123",
-        "productName": "Name",
-        "categoryId": "789",
-        "price": 500,
-        "quantity": 10
+        "name": "Recycled Bronze Computer",
+        "categoryId": 5029,
+        "price": 431.63,
+        "quantity": 5
     }
-
    ```
 
    - response-status : 200
-   - response-body:
+   - response-body :
 
    ```json
     {
-        "message": "Product is successfully created"
+        "message": "Product created successfully",
+        "id" : 1402
     }
    ```
 
@@ -95,87 +122,94 @@
 
 2. **POST /api/v1/category**
 
+    *To insert a new Category*
+
    - request-body:
 
    ```json
    {
-       "categoryId":"789",
-       "name":"Name",
+       "name":"Electronics",
    }
    ```
 
    - response-status : 200
-   - response-body:
+   - response-body :
 
    ```json
    {
-       "message":"Category is successfully created"
+       "message":"Category created successfully",
+       "id" : 375
    }
-   ```
-
-   <!-- List All Products -->
-
-3. **GET /api/v1/product**
-
-   - response-status:200
-   - response-body:
-
-   ```json
-    {
-        "products": [
-            {
-                "productId": "123",
-                "productName": "Name",
-                "categoryId": "789",
-                "price": 500,
-                "quantity": 10
-            }
-        ]
-    }
    ```
 
    <!-- List products by Category -->
 
-4. **GET /api/v1/product?id={product_id}&category-id={category_id}**
+3. **GET /api/v1/product?id={product_id}&category-id={category_id}&page={page_number}**
 
-    | Query Parameter | Details                                                                                                   |
-    | --------------- | --------------------------------------------------------------------------------------------------------- |
-    | product-id      | optional\<integer><br>This parameter is used to get the details of the product with the given product_id  |
-    | category-id     | optional\<integer><br>This parameter is used to get the details of the product with the given category_id |
+    *To get details of product*
+
+    | Query Parameter | Details                                                                                                                      |
+    | --------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+    | product-id      | optional\<integer> This parameter is used to get the details of the product with the given product_id                        |
+    | category-id     | optional\<integer> This parameter is used to get the details of the product with the given category_id                       |
+    | page            | optional\<integer> This parameter is used for page wise result as only 25 products are displayed at once (Default value : 1) |
+
+    NOTE : If no parameters are specified, details of all products are returned
+
    - response-status:200
-   - response-body:
+   - response-body :
 
    ```json
     {
-        "products": [
+    "products": [
             {
-                "productId": "123",
-                "productName": "Name",
-                "categoryId": "789",
-                "price": 500,
-                "quantity": 10
+            "id": 73529,
+            "name": "Bespoke Fresh Salad",
+            "categoryId": 6104,
+            "price": 208.91,
+            "quantity": 14
+            },
+            {
+            "id": 12038,
+            "name": "Licensed Wooden Chair",
+            "categoryId": 6104,
+            "price": 660.42,
+            "quantity": 3
+            },
+            {
+            "id": 52639,
+            "name": "Gorgeous Metal Cheese",
+            "categoryId": 6104,
+            "price": 685.09,
+            "quantity": 20
             }
         ]
     }
    ```
 
-5. **GET /api/v1/category?category-id={category_id}**
-   
-    | Query Parameter | Details                                                 |
-    | --------------- | ------------------------------------------------------- |
-    | category-id     | required\<integer><br>This parameter is used to get the |
+    <!-- List Category -->
+4. **GET /api/v1/category?category-id={category_id}&page={page_number}**
+    
+    *To get details of a category using its id*
 
-category details with the given category-id |
+    | Query Parameter | Details                                                                                                                                 |
+    | --------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+    | category-id     | optional\<integer> This parameter is the id of the category whose details are to be fetched category details with the given category-id |
+    | page            | optional\<integer> This parameter is used for page wise result as only 25 products are displayed at once (Default value : 1)            |
+    
+    NOTE : If no parameter are specified, details of all categories are returned
+
    - response-status:200
-   - response-body:
+   - response-body :
    ```json
-    {
-        "categoryId": "123",
-        "categoryName": "Name"
-    }
+   {
+       "id":5029,
+       "name":"Electronics",
+   }
    ```
 
-6. **PUT /api/v1/product?product-id={product_id}&name={product_name}&category={category_id}&price={product_price}&quantity={product_quantity}**
+    <!-- Update product -->
+5. **PUT /api/v1/product?product-id={product_id}&name={product_name}&category={category_id}&price={product_price}&quantity={product_quantity}**
    
     *To update details of a product*
     
@@ -186,9 +220,11 @@ category details with the given category-id |
     | category-id     | optional\<integer> The ID of the category to replace the existing category ID of the product |
     | price           | optional\<double> The new price to replace the existing price of the product                 |
     | quantity        | optional\<integer> The new quantity to replace the existing quantity of the product          |
-  
+    
+    NOTE : Alteast 1 of the optional parameters should be specified
+    
    - response-status:200
-   - response-body:
+   - response-body :
 
    ```json
     {
@@ -196,17 +232,18 @@ category details with the given category-id |
     }
    ```
 
-7. **PUT /api/v1/category?category-id={category_id}&name={category_name}**
+    <!-- Update category -->
+6. **PUT /api/v1/category?category-id={category_id}&name={category_name}**
 
     *To update the name of a category*
 
-    | Query Parameters | Details                                                  |
-    | ---------------- | -------------------------------------------------------- |
-    | category-id      | required\<integer> The id of the category to be updated  |
-    | name             | required\<string> The name of the category to be updated |
+    | Query Parameters | Details                                                                     |
+    | ---------------- | --------------------------------------------------------------------------- |
+    | category-id      | required\<integer> The id of the category to be updated                     |
+    | name             | required\<string> The name of the category to which it should be updated to |
 
    - response-status:200
-   - response-body:
+   - response-body :
    
    ```json
     {
@@ -214,7 +251,8 @@ category details with the given category-id |
     }
    ```
 
-8. **DELETE /api/v1/product?product-id={product_id}**
+    <!-- Delete product -->
+7. **DELETE /api/v1/product?product-id={product_id}**
 
     *To delete a product using its id*
 
@@ -223,13 +261,16 @@ category details with the given category-id |
     | product-id      | required\<integer> The id of the product to be deleted |
 
    - response-status:200
-   - response-body:
+   - response-body :
+   - 
    ```json
     {
         "message": "Successfully deleted product"
     }
    ```
-9.  **DELETE /api/v1/category?category-id={category_id}**
+
+    <!-- Delete category -->
+8.  **DELETE /api/v1/category?category-id={category_id}**
     
     *To delete a category using its id*
 
@@ -238,7 +279,7 @@ category details with the given category-id |
     | category-id     | required\<integer> The id of the category to be deleted |
 
     - response-status:200
-    - response-body:
+    - response-body :
 
     ```json
     {
@@ -246,17 +287,18 @@ category details with the given category-id |
     }
     ```
 
-10. **PUT /api/v1/order?product-id={product_id}&quantity={qty}**
+    <!-- Update product -->
+9.  **PUT /api/v1/order?product-id={product_id}&quantity={qty}**
 
     *To create an Order to buy items*
 
-    | Query Parameter | Details                                                          |
-    | --------------- | ---------------------------------------------------------------- |
-    | product-id      | required\<integer>  The id of product for which the order is for |
-    | quantity        | required\<integer>  The quantity of the product in the order     |
+    | Query Parameter | Details                                                         |
+    | --------------- | --------------------------------------------------------------- |
+    | product-id      | required\<integer> The id of product for which the order is for |
+    | quantity        | required\<integer> The quantity of the product in the order     |
 
     - response-status: 200
-
+    - response-body :
     ```json
     {
         "message": "successfully ordered"
