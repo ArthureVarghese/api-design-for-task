@@ -47,30 +47,75 @@
         "streams": [
             {
                 "id" : "IND-ASP-ML-SALES",
-                "name" : "Aspire Machine Learning - Sales"
+                "name" : "Aspire Machine Learning - Sales",
+                "accountId": "IND-ASP-ML",
+                "managerId": 1
             },
             {
                 "id" : "IND-ASP-ML-DELIVERY",
-                "name" : "Aspire Machine Learning - Delivery"
+                "name" : "Aspire Machine Learning - Delivery",
+                "accountId": "IND-ASP-ML",
+                "managerId": 2
             },
             {
                 "id" : "IND-ASP-ML-QA",
-                "name" : "Aspire Machine Learning - Quality Assurance"
+                "name" : "Aspire Machine Learning - Quality Assurance",
+                "accountId": "IND-ASP-ML",
+                "managerId": 3
             }
         ]
     }
    ```
 
-3. **PUT /api/v1/employees?employee-id={employee_id}&manager-id={manager_id}&account-name={account_name}&designation={designation_name}**
+3. **PUT /api/v1/employees/manager?employee-id={employee_id}&manager-id={manager_id}**
    
    *To update details of employee*
 
     | Query Parameter | Details                                                                                                                  |
     | --------------- | ------------------------------------------------------------------------------------------------------------------------ |
-    | employee-id     | required\<integer> This parameter is used to update he manager-id, account-name and designation of the given employee_id |
-    | manager-id      | optional\<integer> This parameter is used to update he manager-id of the given employee_id                               |
-    | account-name    | optional\<integer> This parameter is used to update he account_name of the given employee_id                             |
-    | designation     | optional\<integer> This parameter is used to update he designation_name of the given employee_id                         |
+    | employee-id     | required\<integer> This parameter is the employee_id of the employee that need to be updated                             |
+    | manager-id      | required\<integer> This parameter is the new manager_id to replace the existing one                                      |
+
+
+   - response-status : 200
+   - response-body :
+
+   ```json
+    {
+        "message": "Clark Kent's details has been updated"
+    }
+   ```
+
+4. **PUT /api/v1/employees/account?employee-id={employee_id}&account-name={account_name}&stream-id={stream_id}**
+   
+   *To update details of employee*
+
+    | Query Parameter | Details                                                                                                                  |
+    | --------------- | ------------------------------------------------------------------------------------------------------------------------ |
+    | employee-id     | required\<integer> This parameter is the employee_id of the employee that need to be updated                             |
+    | account-name    | required\<integer> This parameter is the new account_name to replace the existing one                                    |
+    | stream-id       | required\<integer> This parameter is the new stream_id to replace the existing one                                       |
+
+
+   - response-status : 200
+   - response-body :
+
+   ```json
+    {
+        "message": "Clark Kent's details has been updated"
+    }
+   ```
+
+5. **PUT /api/v1/employees/designation?employee-id={employee_id}&designation={designation}&stream-id={stream_id}&manager-id={manager_id}**
+   
+   *To update details of employee*
+
+    | Query Parameter | Details                                                                                                                  |
+    | --------------- | ------------------------------------------------------------------------------------------------------------------------ |
+    | employee-id     | required\<integer> This parameter is the employee_id of the employee that need to be updated                             |
+    | designation     | required\<integer> This parameter is the new designation to replace the existing one                                     |
+    | stream-id       | optional\<integer> This parameter is the new stream_id to replace the existing one                                       |
+    | manager-id      | optional\<integer> This parameter is the new manager_id to replace the existing one                                      |
 
     NOTE : Alteast 1 of the optional parameters should be specified
 
@@ -87,15 +132,19 @@
 
 ## Entity
 
-<img src="inventory_database_diagram.png" alt="inventory-entity-diagram" style="width:600px;"/>
+<img src="inventory_database_diagram.png" alt="inventory-entity-diagram" style="width:800px;"/>
 
 ## API Methods
 
 <!-- Create Product -->
 
-1. **POST /api/v1/product**
+1. **POST /api/v1/product?user-id={user_id}**
 
     *To insert a new product*
+
+    | Query Parameters | Details                                                                            |
+    | ---------------- | ---------------------------------------------------------------------------------- |
+    | user-id          | required\<integer> The id of the user who wants to add product                     |
 
    - request-body:
 
@@ -120,9 +169,14 @@
 
    <!-- Create Category -->
 
-2. **POST /api/v1/category**
+2. **POST /api/v1/category?user-id={user_id}**
 
     *To insert a new Category*
+
+    | Query Parameters | Details                                                                            |
+    | ---------------- | ---------------------------------------------------------------------------------- |
+    | user-id          | required\<integer> The id of the user who wants to add category                    |
+
 
    - request-body:
 
@@ -209,7 +263,7 @@
    ```
 
     <!-- Update product -->
-5. **PUT /api/v1/product?product-id={product_id}&name={product_name}&category={category_id}&price={product_price}&quantity={product_quantity}**
+5. **PUT /api/v1/product?product-id={product_id}&name={product_name}&category={category_id}&price={product_price}&quantity={product_quantity}&user-id={user_id}**
    
     *To update details of a product*
     
@@ -220,6 +274,7 @@
     | category-id     | optional\<integer> The ID of the category to replace the existing category ID of the product |
     | price           | optional\<double> The new price to replace the existing price of the product                 |
     | quantity        | optional\<integer> The new quantity to replace the existing quantity of the product          |
+    | user-id         | required\<integer> The id of the user, who wants to update                                   |
     
     NOTE : Alteast 1 of the optional parameters should be specified
     
@@ -233,7 +288,7 @@
    ```
 
     <!-- Update category -->
-6. **PUT /api/v1/category?category-id={category_id}&name={category_name}**
+6. **PUT /api/v1/category?category-id={category_id}&name={category_name}&user-id={user_id}**
 
     *To update the name of a category*
 
@@ -241,6 +296,8 @@
     | ---------------- | --------------------------------------------------------------------------- |
     | category-id      | required\<integer> The id of the category to be updated                     |
     | name             | required\<string> The name of the category to which it should be updated to |
+    | user-id          | required\<integer> The id of the user, who wants to update                  |
+
 
    - response-status:200
    - response-body :
@@ -252,13 +309,15 @@
    ```
 
     <!-- Delete product -->
-7. **DELETE /api/v1/product?product-id={product_id}**
+7. **DELETE /api/v1/product?product-id={product_id}&user-id={user_id}**
 
     *To delete a product using its id*
 
     | Query Parameter | Details                                                |
     | --------------- | ------------------------------------------------------ |
     | product-id      | required\<integer> The id of the product to be deleted |
+    | user-id         | required\<integer> The id of the user, who wants to delete             |
+
 
    - response-status:200
    - response-body :
@@ -270,13 +329,14 @@
    ```
 
     <!-- Delete category -->
-8.  **DELETE /api/v1/category?category-id={category_id}**
+8.  **DELETE /api/v1/category?category-id={category_id}&user-id={user_id}**
     
     *To delete a category using its id*
 
     | Query Parameter | Details                                                 |
     | --------------- | ------------------------------------------------------- |
     | category-id     | required\<integer> The id of the category to be deleted |
+    | user-id         | required\<integer> The id of the user, who wants to delete                                 |
 
     - response-status:200
     - response-body :
@@ -288,7 +348,7 @@
     ```
 
     <!-- Update product -->
-9.  **PUT /api/v1/order?product-id={product_id}&quantity={qty}**
+9.  **PUT /api/v1/order?product-id={product_id}&quantity={qty}&user-id={user_id}**
 
     *To create an Order to buy items*
 
@@ -296,6 +356,7 @@
     | --------------- | --------------------------------------------------------------- |
     | product-id      | required\<integer> The id of product for which the order is for |
     | quantity        | required\<integer> The quantity of the product in the order     |
+    | user-id         | required\<integer> The id of the user, who wants to order       |
 
     - response-status: 200
     - response-body :
