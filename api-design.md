@@ -13,7 +13,7 @@
     | Query Parameter | Details                                                                                                                      |
     | --------------- | ---------------------------------------------------------------------------------------------------------------------------- |
     | starts-with     | optional\<character> This parameter is used to get the employee details where name starts with letter                        |
-    | page            | optional\<integer> This parameter is used for page wise result as only 25 products are displayed at once (Default value : 1) |
+    | page            | optional\<integer> This parameter is used for page wise result as only 25 employees are displayed at once (Default value : 1)|
 
     NOTE : If  ```starts-with``` is not specified, details of all employees are returned
 
